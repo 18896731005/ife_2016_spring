@@ -34,13 +34,14 @@ Observer_es5.prototype.makeObserver = function (obj) {
   }
 }
 
-/* use ES6 proxy */
+/* use ES6 proxy, ES6方法只适用于单层对象 */
 function Observer_es6(data){
   for(let key in data){
     if(data.hasOwnProperty(key) && typeof data[key] === 'object'){
-      new Observer_es6(data[key]);
+      Observer_es6(data[key]);
     }
   }
+
   return new Proxy(data, {
     get: function(target, key){
       if(key in target){
